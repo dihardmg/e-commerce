@@ -1168,7 +1168,6 @@ public class ShardingStrategy {
 ### 🎯 Phase 1: Foundation (0-3 months)
 1. **Security Hardening**
    - Enhanced JWT security with RS256 signing and token blacklisting
-   - Add MFA (TOTP) support
    - Enhance API security policies with rate limiting and threat protection
 
 2. **Performance Optimization**
