@@ -885,39 +885,7 @@ public class JwtSecurityConfig {
 }
 ```
 
-#### 2. Multi-Factor Authentication (MFA)
-```java
-@RestController
-@RequestMapping("/api/v1/auth/mfa")
-public class MfaController {
-
-    @PostMapping("/setup")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<MfaSetupResponse> setupMfa(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-        User user = userService.findById(userPrincipal.getUserId());
-
-        // Generate TOTP secret
-        String secret = totpService.generateSecret();
-
-        // Generate QR code
-        String issuer = "E-Commerce Platform";
-        String accountName = user.getEmail();
-        String qrCodeUrl = totpService.getQrCodeUrl(issuer, accountName, secret);
-        String qrCodeBase64 = qrCodeGenerator.generateBase64QrCode(qrCodeUrl);
-
-        // Generate backup codes
-        List<String> backupCodes = mfaService.generateBackupCodes(user.getUserId());
-
-        return ResponseEntity.ok(MfaSetupResponse.builder()
-            .secret(secret)
-            .qrCode(qrCodeBase64)
-            .backupCodes(backupCodes)
-            .build());
-    }
-}
-```
-
-#### 3. Attribute-Based Access Control (ABAC)
+#### 2. Attribute-Based Access Control (ABAC)
 ```java
 @Component
 public class AbacPolicyEnforcer {
